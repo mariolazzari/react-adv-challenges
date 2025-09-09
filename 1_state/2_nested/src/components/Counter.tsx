@@ -1,9 +1,8 @@
-type Props = {
-  count: number;
-  setCount: (count: number) => void;
-};
+import { useState } from "react";
 
-export function Counter({ count, setCount }: Props) {
+export function Counter() {
+  const [count, setCount] = useState(0);
+
   console.log("🔁 Counter re-rendered");
 
   return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;

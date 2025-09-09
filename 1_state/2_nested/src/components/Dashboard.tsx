@@ -1,17 +1,7 @@
-import { Counter } from "./Counter";
+import type { PropsWithChildren } from "react";
 
-type Props = {
-  count: number;
-  setCount: (count: number) => void;
-};
-
-export function Dashboard({ count, setCount }: Props) {
+export function Dashboard({ children }: PropsWithChildren) {
   console.log("🔁 Dashboard re-rendered");
 
-  return (
-    <div>
-      <h2>Dashboard</h2>
-      <Counter count={count} setCount={setCount} />
-    </div>
-  );
+  return <div>{children}</div>;
 }
