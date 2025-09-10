@@ -186,3 +186,38 @@ export default App
 - Complex logic inside render
 - Expensive calculations
 - Complex logic and state lifted too high
+
+## Component configuration and lifecycle
+
+### Preventing useEffect infinite loop
+
+- Use conditional checks
+- Use setState(prev =>...)
+- Use dependency list carefully
+- Momoize components with useCallback and useMemo
+
+```tsx
+import { useEffect, useState } from "react";
+
+export function Countdown() {
+  const [timeLeft, setTimeLeft] = useState(10);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      return;
+    }
+
+    const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [timeLeft]);
+
+  return (
+    <>
+      <h2>Time left: {timeLeft}</h2>
+    </>
+  );
+}
+```
