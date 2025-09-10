@@ -103,6 +103,86 @@ function App() {
   );
 }
 
+export default App
+```
+
+### Avoiding unnecessary re-renders
+
+```tsx
+import { useState } from 'react';
+
+function Dashboard({ children }) {
+  console.log('🔁 Dashboard re-rendered');
+  return (
+    <div>
+      {children}
+    </div>
+  );
+}
+
+function Counter() {
+
+  console.log('🔁 Counter re-rendered');
+  return (
+    <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+  );
+}
+
+function App() {
+
+  const [message, setMessage] = useState('');
+  const [count, setCount] = useState(0);
+  console.log('🔁 App re-rendered');
+  // 🔁 Changing message re-renders everything — even the Counter unnecessarily
+  return (
+    <div>
+      <input
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type a message"
+      />
+      <Dashboard>
+        <Counter />
+      </Dashboard>
+    </div>
+  );
+}
 
 export default App
-´´´
+```
+
+```tsx
+import { memo, useState } from "react";
+import { Dashboard } from "./components/Dashboard";
+import { Counter } from "./components/Counter";
+
+const DashboardMemo = memo(Dashboard);
+const CounterMemo = memo(Counter);
+
+function App() {
+  const [message, setMessage] = useState("");
+  console.log("🔁 App re-rendered");
+
+  return (
+    <>
+      <input
+        value={message}
+        onChange={e => setMessage(e.target.value)}
+        placeholder="Type a message"
+      />
+      <DashboardMemo>
+        <CounterMemo />
+      </DashboardMemo>
+    </>
+  );
+}
+
+export default App
+```
+
+### Identify bottlenecks
+
+- Too much global state and props drilling
+- Complex logic inside render
+- Expensive calculations
+- Complex logic and state lifted too high
