@@ -221,3 +221,75 @@ export function Countdown() {
   );
 }
 ```
+
+### Overcome use of useEffect
+
+```tsx
+import React, { useEffect, useState, useMemo } from 'react';
+
+function UserProfile({ first, last, theme }) {
+  const [data, setData] = useState({ first: null, last: null });
+  const [fullName, setFullName] = useState(null)
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch('/api/data');
+      const json = await res.json();
+      setData(json);
+    } catch (e) {
+      setError(e)
+    }
+  };
+
+
+  useEffect(() => {
+    fetchData(); // no error handling!
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme])
+
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  }, [count])
+
+  const profile = useMemo(() => {
+    return data.name + ", " + data.first
+  }, [data])
+
+
+  if (loading) return <p>Loading profile...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <div>
+      <h1>Hello, {fullName}!</h1>
+      <button onClick={() => setClickCount((c) => c + 1)}>
+        Clicked {clickCount} times
+      </button>
+      {profile && (
+        <div>
+          <p>Email: {profile.email}</p>
+          <p>Bio: {profile.bio}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default UserProfile;
+```
+
+## Memoization in React
+
+### Maximize performance
+
+```tsx
+
+```
