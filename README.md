@@ -290,6 +290,28 @@ export default UserProfile;
 
 ### Maximize performance
 
+- Unnecessary re-renders
+- Expensive calculations
+- Complex logic
+
+```tsx
+const component = React.memo(function Component({title}){
+  return <h1>{title}</h1>
+})
+
+const flteredList = useMemo(() => {
+  return items.filter(item => item.visible)
+}, [items])
+
+const onClick = useCallback(() => {
+  console.log("onClick")
+}, [items])
+```
+
+### Avoiding expensive calculations
+
+[Built in hooks](https://react.dev/reference/react/hooks)
+
 ```tsx
 
 ```
