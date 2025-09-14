@@ -352,6 +352,4 @@ export const useDashboardContext = () => {
 
 ### Connect external system
 
-```tsx
-
-```
+## Debouncing and throttling
