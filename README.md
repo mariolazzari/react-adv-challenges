@@ -22,7 +22,6 @@
 
 - Fundamental design concept
 - Nesting components and passing props to children
-- 
 
 ```tsx
 import { useState } from 'react';
@@ -311,6 +310,47 @@ const onClick = useCallback(() => {
 ### Avoiding expensive calculations
 
 [Built in hooks](https://react.dev/reference/react/hooks)
+
+## Avanced React patterns
+
+### Overcoming props drilling
+
+#### Props drilling
+
+Passing props between different layers of components
+
+- Tight coupling
+- Hard to read
+- Difficult to update
+
+### Lifting state up with useContext
+
+[useContext](https://react.dev/reference/react/useContext)
+
+### Managing multiple states with useReducer
+
+[useReducer](https://react.dev/reference/react/useReducer)
+
+### Custom hooks
+
+```tsx
+export const useDashboardContext = () => {
+  const ctx = useContext(DashboardContext);
+  if (!ctx) {
+    throw new Error("Component must be wrapped into DashboardProvider");
+  }
+
+  return ctx;
+};
+```
+
+## Data fetching
+
+### useEffect
+
+[useEffect](https://react.dev/reference/react/useEffect)
+
+### Connect external system
 
 ```tsx
 
